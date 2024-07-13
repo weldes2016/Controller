@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Acre" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-69.590561, -10.958183],
+            "Acre",
+            [-69.590561, -10.958183]
+          ]
+        ]
+      }
+    }
+    
+  ]
+}

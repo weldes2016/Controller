@@ -1,0 +1,172 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<h:outputStylesheet name="css/flags/flags.css" library="demo" />
+	</ui:define>
+
+	<ui:define name="title">Envio Boletos WhatsApp</ui:define>
+
+	<ui:define name="viewname">
+		<li>FINANCEIRO</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/table">ENVIO DE BOLETOS WhatsApp</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="formDataTable">
+			<style>
+.cheap {
+	background-color: #54a90a !important;
+	background-image: none !important;
+	color: #ffffff !important;
+}
+</style>
+
+			<div class="grid table-demo">
+				<div class="col-12">
+					<div class="card">
+
+						<p:growl id="msgs" showDetail="true"
+							skipDetailIfEqualsSummary="true" />
+
+						<p>Olá #{MBUsuario.usuarioLogado.nome} Abaixo a lista dos
+							boletos da empresa #{MBUsuario.empresaSelecionada.nom} que ainda
+							não foram enviados pelo WhatsApp.</p>
+
+						<p:panel header="Informe o intervalo de datas">
+							<p:outputLabel id="lblInicial" value="Data Inicial: " />
+							<p:inputMask value="#{MBDuplicatas.dtInicial}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<p:outputLabel id="lblFinal" value="Data Final: " />
+							<p:inputMask value="#{MBDuplicatas.dtFinal}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<p:outputLabel for="@next" value=" Selecione a opção:" />
+							<p:selectOneMenu id="option" value="#{MBDuplicatas.enviados}">
+								<f:selectItem itemLabel="Não enviados" itemValue="IS NULL" />
+								<f:selectItem itemLabel="Enviados" itemValue="IS NOT NULL" />
+							</p:selectOneMenu>
+
+
+							<p:commandButton value="Gerar"
+								action="#{MBDuplicatas.listarDuprecBoletosAEnviarWA(MBUsuarios.empresaSelecionada.usu,MBDuplicatas.dtInicial, MBDuplicatas.dtFinal, MBDuplicatas.enviados)}"
+								update="tblBoletos">
+							</p:commandButton>
+						</p:panel>
+						<p:dataTable id="tblBoletos" widgetVar="bolSDT" var="bol"
+							resizableColumns="true" value="#{MBDuplicatas.boletosAEnviarWA}"
+							reflow="true" selection="#{MBDuplicatas.boletosSelecionados}"
+							rowKey="#{bol.id_duprec}" paginator="true" rows="10"
+							paginatorPosition="bottom" rowSelectMode="add">
+
+							<f:facet name="header">
+								<div class="customers-table-header">
+									<span style="font-weight: bold">BOLETOS</span> <span
+										class="ui-input-icon-left filter-container"> <i
+										class="pi pi-search" /> <p:inputText id="globalFilter"
+											onkeyup="PF('bolSDT').filter()" placeholder="Pesquisa Geral" />
+									</span>
+								</div>
+							</f:facet>
+							<p:column selectionMode="multiple" style="width:1%" />
+
+							<p:column headerText="Num" sortBy="#{bol.numdup}"
+								filterBy="#{bol.numdup}" style="width:2%">
+								<h:outputText value="#{bol.numdup}-#{bol.ordem}" />
+							</p:column>
+
+							<p:column headerText="Cliente" sortBy="#{bol.cliente}"
+								filterBy="#{bol.cliente}" style="width:15%">
+								<h:outputText value="#{bol.cliente.toUpperCase()}">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="WhatsApp" sortBy="#{bol.telefone}"
+								filterBy="#{bol.telefone}"
+								style="width: 7%; color: #{boletos.texto.length() lt 14 ? 'red' : 'black'};">
+								<h:outputText
+									value="#{MBDuplicatas.formatarTelefone(bol.telefone)}"
+									styleClass="cheap">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Dt. Envio" sortBy="#{bol.tokenjuno}"
+								filterBy="#{bol.tokenjuno}"
+								style="width: 7%; color: #{boletos.texto.length() lt 14 ? 'red' : 'black'};">
+								<h:outputText value="#{bol.tokenjuno}">
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Valor" sortBy="#{bol.valor}"
+								filterBy="#{bol.valor}" style="width:4%">
+								<h:outputText value="#{bol.valor}">
+									<f:convertNumber pattern="¤#,##0.00" currencySymbol="R$" />
+								</h:outputText>
+							</p:column>
+
+
+							<p:column headerText="Emissao" sortBy="#{bol.emissao}"
+								filterBy="#{bol.emissao}" style="width:7%">
+								<h:outputText value="#{bol.emissao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Vencimento" sortBy="#{bol.vencimento}"
+								filterBy="#{bol.vencimento}" style="width:7%">
+								<h:outputText value="#{bol.vencimento}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column style="width:3rem;text-align: center;width:1%">
+								<p:commandButton update=":formDataTable:historicostDetail"
+									oncomplete="PF('historicoDialog').show()" icon="pi pi-search"
+									title="View"
+									action="#{MBDuplicatas.listarHistoricosWA(bol.id_duprec, MBUsuarios.empresaSelecionada.usu)}" />
+							</p:column>
+						</p:dataTable>
+
+						<p:commandButton label="Enviar" value="Enviar"
+							action="#{MBDuplicatas.enviarBoletosWhatsApp(MBDuplicatas.boletosSelecionados, MBUsuarios.empresaSelecionada)}"
+							update="tblBoletos">
+						</p:commandButton>
+
+					</div>
+				</div>
+
+			</div>
+
+			<p:dialog header="Historico de WhatsApp" widgetVar="historicoDialog"
+				modal="true" showEffect="fade" hideEffect="fade" width="600"
+				height="260">
+				<p:outputPanel id="historicostDetail" style="text-align:center;">
+					<p:dataTable value="#{MBDuplicatas.historicosWA}" var="hist">
+
+						<p:column headerText="Duplicata" style="width:10%">
+							<h:outputText value="#{hist.duplicata}" style="color:#EE0000">
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="WhatsApp" style="width:25%">
+							<h:outputText
+								value="#{MBDuplicatas.formatarTelefone(hist.whastApp)}"
+								styleClass="cheap">
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Data/hora" style="text-align: left;">
+							<h:outputText value="#{hist.historico}" />
+						</p:column>
+					</p:dataTable>
+
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

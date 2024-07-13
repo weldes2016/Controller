@@ -1,0 +1,170 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/rain"
+	template="/WEB-INF/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="viewname">
+		<li>MODERNIZE</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/dashboard">DASHBOARD</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<span class="overview-title">#{MBUsuarios.empresaSelecionada.nom}</span>
+		<div class="layout-dashboard">
+			<div class="grid">
+
+				<div class="col-12 md:col-5 xl:col-3">
+
+					<div class="card  overview-box">
+						<p:graphicImage name="images/dashboard/effect-useronline.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-usersonline.png" library="demo" />
+						</span>
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Fat. no mes de
+								#{MBFaturamento.mesAtual} de #{MBFaturamento.anoAtual}</span>
+							<h3>#{MBFaturamento.mostrarFaturamentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualFaturamento(MBUsuarios.empresaSelecionada.usu)}
+							</span> do mes anterior que foi de
+								#{MBFaturamento.mostrarFaturamentoMesAnterior(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-checkins.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-checkins.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Fat. no ano de
+								#{MBFaturamento.anoAtual}</span>
+							<h3>#{MBFaturamento.mostrarFaturamentoAnoAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualFaturamentoNoAnoAnterior(MBUsuarios.empresaSelecionada.usu)}</span>
+								do ano anterior que foi de
+								#{MBFaturamento.mostrarFaturamentoAnoAnterior(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box ">
+						<p:graphicImage name="images/dashboard/effect-filessynced.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-filessynced.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Fat. no mes
+								#{MBFaturamento.mesAtual} de #{MBFaturamento.anoAnterior}</span>
+							<h3>#{MBFaturamento.mostrarFaturamentoNoMesAnoAnterior(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualFaturamentoNoMesNoAnoAnterior(MBUsuarios.empresaSelecionada.usu)}</span>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Recto. no mes de
+								#{MBFaturamento.mesAtual} de #{MBFaturamento.anoAtual}</span>
+							<h3>#{MBFaturamento.mostrarRecebidosMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualRecebimento(MBUsuarios.empresaSelecionada.usu)}</span>
+								em relação ao total de
+								#{MBFaturamento.mostrarVencimentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Recebidos no Mes Atual</span>
+							<h3>#{MBFaturamento.mostrarRecebidosMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualRecebimento(MBUsuarios.empresaSelecionada.usu)}</span>
+								em relação ao total de
+								#{MBFaturamento.mostrarVencimentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/minigraph-1.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Recebidos no Mes Atual</span>
+							<h3>#{MBFaturamento.mostrarRecebidosMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualRecebimento(MBUsuarios.empresaSelecionada.usu)}</span>
+								em relação ao total de
+								#{MBFaturamento.mostrarVencimentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Recebidos no Mes Atual</span>
+							<h3>#{MBFaturamento.mostrarRecebidosMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualRecebimento(MBUsuarios.empresaSelecionada.usu)}</span>
+								em relação ao total de
+								#{MBFaturamento.mostrarVencimentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+						<div class="overview">
+							<span class="overview-title">Recebidos no Mes Atual</span>
+							<h3>#{MBFaturamento.mostrarRecebidosMesAtual(MBUsuarios.empresaSelecionada.usu)}</h3>
+							<span><span>#{MBFaturamento.mostrarPercentualRecebimento(MBUsuarios.empresaSelecionada.usu)}</span>
+								em relação ao total de
+								#{MBFaturamento.mostrarVencimentoMesAtual(MBUsuarios.empresaSelecionada.usu)}</span>
+						</div>
+					</div>
+				</div>
+				
+
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

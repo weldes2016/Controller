@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Form Layout</ui:define>
+
+	<ui:define name="viewname">
+		<li>UI KIT</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/formlayout">FORM LAYOUT</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<div class="grid">
+				<div class="col-12 md:col-6">
+					<div class="card ui-fluid">
+						<p:tabView>
+							<p:tab title="Filtrar Empresas">
+
+							</p:tab>
+							<p:tab title="Filtrar Pessoas">
+
+							</p:tab>
+							<p:tab title="Filtrar Contatos">
+
+							</p:tab>
+						</p:tabView>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

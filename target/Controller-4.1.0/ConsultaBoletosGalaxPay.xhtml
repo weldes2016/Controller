@@ -1,0 +1,201 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<h:outputStylesheet name="css/flags/flags.css" library="demo" />
+	</ui:define>
+
+	<ui:define name="title">Boletos</ui:define>
+
+	<ui:define name="viewname">
+		<li>FINANCEIRO</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/table">CONSULTA BOLETOS</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:growl id="msg" showDetail="true" skipDetailIfEqualsSummary="true" />
+
+			<div class="grid table-demo">
+				<div class="col-12">
+					<div class="card">
+
+						<p:growl id="msgs" showDetail="true"
+							skipDetailIfEqualsSummary="true" />
+
+						<p>Olá #{MBUsuarios.usuarioLogado.nome} Abaixo a lista dos
+							boletos da empresa #{MBUsuarios.empresaSelecionada.nom}
+							registrados no GalaxPay.</p>
+						<p:dataTable widgetVar="boletosDT" var="boletos"
+							resizableColumns="true" lazy="true"
+							value="#{MBDuplicatas.listarBoletosGalaxPayPortal(MBUsuarios.empresaSelecionada.usu)}"
+							rowKey="#{boletos.id_duprec}" paginator="true" rows="10"
+							paginatorPosition="bottom" rowSelectMode="add">
+
+							<f:facet name="header">
+								<div class="customers-table-header">
+									<span style="font-weight: bold">BOLETOS</span> <span
+										class="ui-input-icon-left filter-container"> <i
+										class="pi pi-search" /> <p:inputText id="globalFilter"
+											onkeyup="PF('boletosDT').filter()"
+											placeholder="Pesquisa Geral" />
+									</span>
+								</div>
+							</f:facet>
+
+							<p:column headerText="N.Num" filterBy="#{boletos.bankNumber}"
+								style="width:4%" sortBy="#{boletos.bankNumber}">
+								<h:outputText value="#{boletos.bankNumber}" />
+							</p:column>
+
+							<p:column headerText="Valor" filterBy="#{boletos.valor}"
+								style="width:10%" sortBy="#{boletos.valor}">
+								<h:outputText value="#{boletos.valor}" />
+
+							</p:column>
+
+							<p:column headerText="Link" filterBy="#{boletos.paymentLink}"
+								style="width:30%" sortBy="#{boletos.paymentLink}">
+								<h:outputText value="#{boletos.paymentLink}" />
+							</p:column>
+							<p:column headerText="Cliente" filterBy="#{boletos.cliente}"
+								style="width:10%" sortBy="#{boletos.cliente}">
+								<h:outputText value="#{boletos.cliente}" />
+							</p:column>
+
+							<p:column headerText="Vencimento" filterBy="#{boletos.payDay}"
+								style="width:10%" sortBy="#{boletos.payDay}">
+								<h:outputText value="#{boletos.payDay}">
+									<f:convertDateTime pattern="dd/MM/yy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column style="width:5%;text-align: center">
+								<p:commandButton update=":form:pnlEnvioIndividual"
+									oncomplete="PF('dlgBoletos').show()" icon="pi pi-search"
+									title="View">
+									<f:setPropertyActionListener value="#{boleto}"
+										target="#{MBDuplicatas.bolGalax}" />
+								</p:commandButton>
+								<p:commandButton update=":form:pnlEnvioIndividual" 
+									oncomplete="PF('dlgBoletos').show()" icon="pi pi-whatsapp"
+									title="Enviar WhatsApp">
+									<f:setPropertyActionListener value="#{boleto}"
+										target="#{MBDuplicatas.bolGalax}" />
+								</p:commandButton>
+							</p:column>
+							
+
+						</p:dataTable>
+					</div>
+
+				</div>
+
+			</div>
+
+			<p:dialog header="Detalhes" widgetVar="boletoDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="boletoDetail" style="text-align:center;">
+					<p:column rendered="#{not empty dtSelectionView.selectedProduct}">
+						<div class="boleto">
+							<div class="product-grid-item card" style="margin-bottom: 0">
+								<div class="product-grid-item-top">
+									<div class="product-grid-item-bottom">
+										<h:outputText value="#{MBDuplicatas.bolGalax.barCode}">
+
+										</h:outputText>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:column>
+				</p:outputPanel>
+			</p:dialog>
+
+			<p:dialog id="dlgbol" widgetVar="dlgBoletos" minHeight="400"
+				responsive="true" width="600" closeOnEscape="true"
+				header="Atualização de Boletos" showEffect="fade">
+				<p class="p-m-0">Boletos Já registrados no Juno, e que estão em
+					aberto. Esta tela deve ser usada apenas para atualizar os boletos.
+					A Reemissao deve ser enviada pelo Juno</p>
+
+				<div class="ui-fluid">
+					<div class="ui-g">
+						<div class="ui-g-14">
+							<div class="card card-w-title">
+								<p:panelGrid id="pnlEnvioIndividual" columns="4">
+									<h:outputLabel value="Cliente:" />
+									<h:outputLabel value="#{MBBoletos.bolGalax.cliente}" />
+
+									<h:outputLabel value="CNPJ/CPF:" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.cpfCnpj}" />
+
+
+									<h:outputLabel value="Nota Fiscal:" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.numNFSe}" />
+
+									<h:outputLabel value="Nosso Número:" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.nossonum}" />
+
+									<h:outputLabel value="Valor Original" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.valor}">
+										<f:convertNumber type="currency" locale="pt_BR" />
+									</h:outputLabel>
+
+									<h:outputLabel value="Emissão" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.emissao}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputLabel>
+
+									<h:outputLabel value="Vencimento" />
+									<h:outputLabel
+										value="#{MBBoletos.boletoSelecionado.vencimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputLabel>
+
+									<h:outputLabel value="Dias de Atraso" />
+									<h:outputLabel value="#{MBBoletos.boletoSelecionado.atraso}" />
+
+									<p:outputLabel value="Valor multa:" />
+									<p:outputLabel value="#{MBBoletos.boletoSelecionado.multa}">
+										<f:convertNumber type="currency" locale="pt_BR" />
+									</p:outputLabel>
+
+									<p:outputLabel value="Valor Juros:" />
+									<p:outputLabel id="oplMulta"
+										value="#{MBBoletos.boletoSelecionado.juros}">
+										<f:convertNumber type="currency" locale="pt_BR" />
+									</p:outputLabel>
+									<p:outputLabel value="Valor Atualizado:" />
+									<p:outputLabel
+										value="#{MBBoletos.boletoSelecionado.vlrAtualizado}">
+										<f:convertNumber type="currency" locale="pt_BR" />
+									</p:outputLabel>
+
+									<p:outputLabel value="e-mail:" />
+									<p:outputLabel value="#{MBBoletos.boletoSelecionado.email}" />
+
+								</p:panelGrid>
+								<p:commandButton icon="ui ui pencil" value="Atualizar"
+									actionListener="#{MBBoletos.atualizarBoletoJuno(MBBoletos.boletoSelecionado, MBUsuario.empresaSelecionada.usu)}">
+									<p:ajax oncomplete="PF('dlgBoletos').hide()" />
+								</p:commandButton>
+								<p:commandButton icon="ui ui pencil" value="Gerar Link"
+									actionListener="#{MBBoletos.gerarLink(MBBoletos.boletoSelecionado, MBUsuario.empresaSelecionada.usu)}">
+									<p:ajax oncomplete="PF('dlgBoletos').hide()" />
+								</p:commandButton>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

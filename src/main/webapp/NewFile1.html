@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gráfico de Peixes</title>
+  <style>
+    /* Estilos CSS para o gráfico de peixes */
+    svg {
+      background-color: #f0f0f0;
+    }
+    .fish {
+      fill: #66c2a5;
+      stroke: #000;
+      stroke-width: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gráfico de Peixes</h1>
+  <svg width="600" height="400"></svg>
+
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script>
+    // Dados fictícios representando os tamanhos dos peixes
+    var data = [5, 10, 15, 20, 25];
+
+    // Escala linear para mapear os valores dos dados para o tamanho dos peixes (raio dos círculos)
+    var scale = d3.scaleLinear()
+                  .domain([d3.min(data), d3.max(data)])
+                  .range([10, 50]); // Tamanho mínimo e máximo dos peixes
+
+    // Elemento SVG para desenhar os peixes
+    var svg = d3.select("svg");
+
+    // Desenhar os peixes usando círculos
+    svg.selectAll(".fish")
+       .data(data)
+       .enter()
+       .append("circle")
+       .attr("class", "fish")
+       .attr("cx", function(d, i) { return (i + 1) * 100; }) // Espaçamento horizontal dos peixes
+       .attr("cy", 200) // Posição vertical dos peixes
+       .attr("r", function(d) { return scale(d); }) // Tamanho do peixe (raio do círculo)
+       .on("mouseover", function() {
+         // Adicionar efeito de destaque ao passar o mouse sobre o peixe, se desejar
+         d3.select(this).attr("stroke", "red");
+       })
+       .on("mouseout", function() {
+         // Remover efeito de destaque ao tirar o mouse do peixe, se desejar
+         d3.select(this).attr("stroke", "#000");
+       });
+  </script>
+</body>
+</html>

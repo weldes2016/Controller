@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Extrato Celcoin</ui:define>
+
+	<ui:define name="viewname">
+		<li>RELATORIOS</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/formlayout">EXTRATO CELCOIN</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<style>
+.cheap {
+	background-color: #F0FFFF !important;
+	background-image: none !important;
+	color: #808080 !important;
+}
+
+.ground {
+	background-color: #F0FFFF !important;
+	background-image: none !important;
+	color: #FF0000 !important;
+}
+</style>
+
+			<div class="grid ui-fluid">
+				<div class="col-12 md:col-12">
+					<div class="card">
+						<p:panel header="Informe o intervalo de datas">
+							<p:outputLabel id="lblInicial" value="Data Inicial: " />
+							<p:inputMask value="#{MBGalaxPay.dtInicial}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<p:outputLabel id="lblFinal" value="Data Final: " />
+							<p:inputMask value="#{MBGalaxPay.dtFinal}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<h:selectOneMenu id="empresas"
+								value="#{MBUsuarios.empresaSelecionada}"
+								converter="empresasConverter">
+								<f:selectItems value="#{MBUsuarios.empresasDoUsuario}"
+									var="empresa" itemLabel="#{empresa.nom}" itemValue="#{empresa}" />
+							</h:selectOneMenu>
+							<p:commandButton value="Gerar"
+								action="#{MBGalaxPay.extratoCelcoin(MBUsuarios.empresaSelecionada.usu,MBGalaxPay.dtInicial, MBGalaxPay.dtFinal)}"
+								update="tblBalances">
+							</p:commandButton>
+						</p:panel>
+					</div>
+					<div class="col-12 md:col-12">
+						<p:toolbar styleClass="mb-2">
+							<p:toolbarGroup>
+								<p:commandLink>
+									<p:graphicImage name="/demo/images/csv.png" width="28" />
+									<p:dataExporter type="csv" target="tbl" fileName="vendas"
+										encoding="UTF-8" />
+								</p:commandLink>
+								<p:commandLink>
+									<p:graphicImage name="/demo/images/pdf.png" width="28" />
+									<p:dataExporter type="pdf" target="tblBalances"
+										fileName="vendas" encoding="UTF-8" />
+								</p:commandLink>
+
+							</p:toolbarGroup>
+						</p:toolbar>
+						<p:dataTable value="#{MBGalaxPay.itens}" id="tblBalances" 
+							rowStyleClass="#{balances.value > 0.0 ? 'cheap' : 'ground'}"
+							var="balances" paginator="true" rows="10" rendered="true" lazy="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+							<p:column headerText="ID" style="width:3%;">
+								<h:outputText value="#{balances.galaxPayId}" />
+							</p:column>
+
+							<p:column headerText="Data" style="width:6%;">
+								<h:outputText value="#{balances.createdAt}">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:outputText>
+							</p:column>
+
+							<p:column headerText="Descrição" style="width:23%;">
+								<h:outputText value="#{balances.friendlyDescription}" />
+							</p:column>
+
+
+							<p:column headerText="Valor"
+								style="text-align: right; width: 8%;">
+								<h:outputText value="#{balances.value}">
+									<f:convertNumber type="currency" locale="pt-BR"
+										currencySymbol="R$" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="Saldo"
+								style="text-align: right; width: 8%;">
+								<h:outputText value="#{balances.valorAcumulado}">
+									<f:convertNumber type="currency" locale="pt-BR"
+										currencySymbol="R$" />
+								</h:outputText>
+							</p:column>
+
+						</p:dataTable>
+						
+						<p:commandButton value="Gerar Relatório" actionListener="#{celcoinBean.gerarRelatorio()}" update="tblBalances"/>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Certificados</ui:define>
+
+	<ui:define name="viewname">
+		<li>CERTIFICADOS</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/file">FILE</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="fluid">
+			<div class="col-12">
+				<div class="card">
+					<h5>Certificado</h5>
+					<h:form id="frmCertificado">
+						<p:panel>
+							<p:fileUpload id="fileUpload" value="#{MBCertificados.file}"
+								label="Selecione o Certificado" mode="simple" skinSimple="true"
+								process="@this" update="messages"
+								fileUploadListener="#{MBCertificados.handleFileUpload}" />
+						</p:panel>
+						<p:password value="#{MBCertificados.senha}" toggleMask="true" />
+
+						<p:commandButton value="Validar"
+							styleClass="ui-button-flat mr-3 mb-2"
+							action="#{MBCertificados.validarCertificado}" process="@form"
+							update="frmCertificado:pnlDados" />
+
+						<p:panel id="pnlDados" rendered="#{MBCertificados.rendered}">
+							<p:panelGrid columns="4" style="width: 100%;"
+								header="Dados do Certificado">
+								<p:row>
+									<p:outputLabel value="CNPJ:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj}" />
+								</p:row>
+								<p:row>
+									<p:outputLabel value="Razão Social:" />
+									<h:outputText value="#{MBCertificados.certificado.razaoSocial}" />
+								</p:row>
+								<p:row>
+									<p:outputLabel value="Validade:" />
+									<h:outputText
+										value="#{MBCertificados.certificado.valInicio} - #{MBCertificados.certificado.valFim}" />
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+						<p:panel>
+							<p:dataTable id="dtbCertificados"
+								value="#{MBCertificados.listarCertificados()}"
+								widgetVar="certSDT" var="certificados" resizableColumns="true"
+								lazy="true" reflow="true"
+								selection="#{MBCertificados.certificadosSelecionados}"
+								rowKey="#{certificados.codigo}" paginator="true" rows="10"
+								paginatorPosition="bottom" rowSelectMode="add">
+
+								<f:facet name="header">
+									<div class="customers-table-header">
+										<span style="font-weight: bold">BOLETOS</span> <span
+											class="ui-input-icon-left filter-container"> <i
+											class="pi pi-search" /> <p:inputText id="globalFilter"
+												onkeyup="PF('certSDT').filter()"
+												placeholder="Pesquisa Geral" />
+										</span>
+									</div>
+								</f:facet>
+								<p:column selectionMode="multiple" style="width:2%" />
+
+								<p:column headerText="Cnpj/Cpf">
+									<h:outputText value="#{certificados.cnpj}" />
+								</p:column>
+								<p:column headerText="Razao Social">
+									<h:outputText value="#{certificados.razaoSocial}" />
+								</p:column>
+								<p:column headerText="Emissor">
+									<h:outputText value="#{certificados.emissor}" />
+								</p:column>
+								<p:column headerText="Inicio Validade">
+									<h:outputText value="#{certificados.valInicio}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Fim Validade">
+									<h:outputText value="#{certificados.valFim}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</h:form>
+					<p:messages id="messages" autoUpdate="true" />
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,217 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:po="http://primefaces.org/rain"
+	template="/WEB-INF/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="viewname">
+		<li>MODERNIZE</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/dashboard">DASHBOARD</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<span class="overview-title">#{MBUsuarios.empresaSelecionada.nom}
+		</span>
+		<div class="layout-dashboard">
+			<div class="grid">
+				<div class="col-12 md:col-5 xl:col-3">
+
+					<div class="card  overview-box">
+						<p:graphicImage name="images/dashboard/effect-useronline.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-usersonline.png" library="demo" />
+						</span>
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Provisão
+								Socio:#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"61900320100")} por ano</span>
+							<h3>#{MBDuppag.pagarSocios(MBUsuarios.empresaSelecionada.usu,
+								"61900320100")}</h3>
+							<span><span></span>Pagos
+								#{MBDuppag.pagoSocios(MBUsuarios.empresaSelecionada.usu,
+								"61900320100")} até este mês</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-checkins.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-checkins.png" library="demo" />
+						</span>
+						<div class="overview" translate="yes">
+							<span class="overview-title">Provisao
+								Socio:#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"01720865159")} por ano</span>
+							<h3>#{MBDuppag.pagarSocios(MBUsuarios.empresaSelecionada.usu,
+								"01720865159")}</h3>
+							<span><span></span>Pagos
+								#{MBDuppag.pagoSocios(MBUsuarios.empresaSelecionada.usu,
+								"01720865159")} até este mês</span>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box ">
+						<p:graphicImage name="images/dashboard/effect-filessynced.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-filessynced.png" library="demo" />
+						</span>
+						<div class="overview" translate="yes">
+							<span class="overview-title">Provisão
+								Socio:#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"71487204191")} neste mes</span>
+							<h3>#{MBDuppag.pagarSocios(MBUsuarios.empresaSelecionada.usu,
+								"71487204191")}</h3>
+							<span><span></span>Pagos
+								#{MBDuppag.pagoSocios(MBUsuarios.empresaSelecionada.usu,
+								"71487204191")} até este mês</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+						<div class="overview" translate="yes">
+							<span class="overview-title">Provisao
+								Socio:#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"00964333104")} por ano</span>
+							<h3>#{MBDuppag.pagarSocios(MBUsuarios.empresaSelecionada.usu,
+								"00964333104")}</h3>
+							<span><span></span>Pagos
+								#{MBDuppag.pagoSocios(MBUsuarios.empresaSelecionada.usu,
+								"00964333104")} até este mês</span>
+						</div>
+
+
+					</div>
+
+				</div>
+
+				<div class="col-12 md:col-5 xl:col-3">
+
+					<div class="card  overview-box">
+						<p:graphicImage name="images/dashboard/effect-useronline.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-usersonline.png" library="demo" />
+						</span>
+
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Pagto no mês:
+								#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"61900320100")}</span>
+							<h3>#{MBDuppag.pgtoSociosMes(MBUsuarios.empresaSelecionada.usu,
+								"61900320100")}</h3>
+
+							<span><span></span>A Pagar no mes:<span
+								style="color: green;">
+									#{MBDuppag.aPagarSocioMes(MBUsuarios.empresaSelecionada.usu,
+									"61900320100")}</span>. Restante:<span style="color: red;">
+									#{MBDuppag.restante(MBUsuarios.empresaSelecionada.usu,
+									"61900320100")} </span> </span>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-checkins.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-checkins.png" library="demo" />
+						</span>
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Pagto no mês:
+								#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"01720865159")}</span>
+							<h3>#{MBDuppag.pgtoSociosMes(MBUsuarios.empresaSelecionada.usu,
+								"01720865159")}</h3>
+
+							<span><span></span>A Pagar no mes:<span
+								style="color: green;">
+									#{MBDuppag.aPagarSocioMes(MBUsuarios.empresaSelecionada.usu,
+									"01720865159")}</span>. Restante:<span style="color: red;">
+									#{MBDuppag.restante(MBUsuarios.empresaSelecionada.usu,
+									"01720865159")} </span> </span>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box ">
+						<p:graphicImage name="images/dashboard/effect-filessynced.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-filessynced.png" library="demo" />
+						</span>
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Pagto no mês:
+								#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"71487204191")}</span>
+							<h3>#{MBDuppag.pgtoSociosMes(MBUsuarios.empresaSelecionada.usu,
+								"71487204191")}</h3>
+
+							<span><span></span>A Pagar no mes:<span
+								style="color: green;">
+									#{MBDuppag.aPagarSocioMes(MBUsuarios.empresaSelecionada.usu,
+									"71487204191")}</span>. Restante:<span style="color: red;">
+									#{MBDuppag.restante(MBUsuarios.empresaSelecionada.usu,
+									"71487204191")} </span> </span>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="col-12 md:col-6 xl:col-3">
+					<div class="card overview-box">
+						<p:graphicImage name="images/dashboard/effect-messages.svg"
+							library="demo" />
+						<span class="overview-icon"> <p:graphicImage
+								name="images/dashboard/icon-messages.png" library="demo" />
+						</span>
+
+						<div class="overview" translate="yes">
+							<span class="overview-title">Pagto no mês:
+								#{MBDuppag.nomeSocios(MBUsuarios.empresaSelecionada.usu,
+								"00964333104")}</span>
+							<h3>#{MBDuppag.pgtoSociosMes(MBUsuarios.empresaSelecionada.usu,
+								"00964333104")}</h3>
+
+							<span><span></span>A Pagar no mes:<span
+								style="color: green;">
+									#{MBDuppag.aPagarSocioMes(MBUsuarios.empresaSelecionada.usu,
+									"00964333104")}</span>. Restante:<span style="color: red;">
+									#{MBDuppag.restante(MBUsuarios.empresaSelecionada.usu,
+									"00964333104")} </span> </span>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</ui:define>
+</ui:composition>

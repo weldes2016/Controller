@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>MODERNIZE - Login</title>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</h:head>
+
+<h:body styleClass="login-body">
+	<div class="login-image">
+		<p:graphicImage name="images/pages/bg-header-login.png"
+			library="rain-layout" />
+	</div>
+	<div class="login-card">
+		<h:form id="frmLogin">
+			<h1>
+				MODERNIZE <span>Login</span>
+			</h1>
+			<span>Bem vindo, Insira o seu login <br />Rain
+				network
+			</span>
+			<p:panel id="pnlUsuarios">
+
+				<div class="form-group">
+				
+					<span>Usuário</span>
+					<p:inputText placeholder="Informe o Usuário..."
+						value="#{MBUsuarios.usuario.login}" />
+				</div>
+				<div class="form-group">
+					<span>Senha</span>
+					<p:password placeholder="Informe a senha..."
+						value="#{MBUsuarios.usuario.senha}" />
+				</div>
+				<div class="form-footer">
+					<div class="checkbox">
+						<span>Lembrar-me</span>
+						<p:selectBooleanCheckbox />
+					</div>
+					<a href="#"> Esqueceu a senha?</a>
+				</div>
+				
+				<p:commandButton label="Validar Usuário" icon="pi pi-spin" value="Entrar"
+					action="#{MBUsuarios.validarUsuario(MBUsuarios.usuario)}" />
+				
+			</p:panel>
+			<p:panel id="pnlEmpresas" rendered="#{MBUsuarios.renderizarEmpresas}">
+			<p:outputLabel for="empresas"
+					value="Olá #{MBUsuarios.usuarioLogado.nome}, agora escolha uma empresa: " />
+					<div class="form-footer">
+				<h:selectOneMenu id="empresas" value="#{MBUsuarios.empresaSelecionada}" converter="empresasConverter" >
+					<f:selectItems value="#{MBUsuarios.empresasDoUsuario}" var="empresa"
+						itemLabel="#{empresa.usu}-#{empresa.nom}" itemValue="#{empresa}" />
+				</h:selectOneMenu>
+				</div>
+				<div class="form-group">
+					<p:commandButton label="Acessar" icon="pi pi-spin" value="Entrar"
+						action="#{MBUsuarios.entrar(MBUsuarios.usuarioLogado, MBUsuarios.empresaSelecionada)}"/>
+				</div>
+			</p:panel>
+		</h:form>
+	</div>
+	<h:outputStylesheet name="css/#{guestPreferences.layout}.css" library="rain-layout" />
+</h:body>
+
+</html>

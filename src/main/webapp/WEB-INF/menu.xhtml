@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pr="http://primefaces.org/rain">
+
+	<div class="menu-wrapper">
+		<div class="layout-menu-container">
+			<ui:fragment
+				rendered="#{guestPreferences.profileMode == 'popup' ? false : true}">
+				<div class="layout-profile">
+					<a class="layout-profile-button" href="#"> <span
+						class="image-name"> <p:graphicImage
+								name="images/avatar-profilemenu.png" library="rain-layout" /> <span
+							class="layout-profile-userinfo"> <span
+								class="layout-profile-name">Jordi Santiago</span> <span
+								class="layout-profile-mail">jordi@primetek.com.tr</span>
+						</span>
+					</span> <i class="layout-profile-icon pi pi-chevron-down" />
+					</a>
+					<ul class="layout-profile-menu">
+						<li><a href="#"> <i class="pi pi-user" /> <span>Profile</span>
+						</a></li>
+						<li><a href="#"> <i class="pi pi-cog" /> <span>Settings</span>
+						</a></li>
+						<li><a href="#"> <i class="pi pi-envelope" /> <span>Messages</span>
+						</a></li>
+						<li><a href="#"> <i class="pi pi-bell" /> <span>Notifications</span>
+						</a></li>
+					</ul>
+				</div>
+			</ui:fragment>
+			<h:form id="menuform">
+				<pr:menu widgetVar="RainMenuWidget">
+					<p:submenu id="m_homepage" label="Favorites" icon="pi pi-home">
+						<p:menuitem id="m_dashboard" value="Dashboard" icon="pi pi-home"
+							outcome="/dashboard" />
+						<p:menuitem id="d_dashboard" value="Dashboard Socios"
+							icon="pi pi-home" outcome="/dashboardSocios" />
+					</p:submenu>
+
+					<p:submenu id="m_Menu_Financeiro" label="Financeiro"
+						icon="pi pi-check">
+						<p:submenu id="m_Financeiro" label="Financeiro"
+							icon="pi money-bill">
+							<p:menuitem id="clientes_galaxPay" value="Envio de Clientes"
+								icon="pi-dollar" outcome="/enviarClientesGalaxPay" />
+							<p:menuitem id="cobrancas_galaxPay" value="Envio de Cobranças"
+								icon="pi-dollar" outcome="/enviarBoletosGalaxPay" />
+							<p:menuitem id="boletos_galaxPay"
+								value="Envio de Boletos WhatsApp" icon="pi-dollar"
+								outcome="/enviarBoletosWA" />
+							<p:menuitem id="consultaCobrancas" value="Consulta Cobrancas"
+								icon="pi-dollar" outcome="/ConsultaBoletosGalaxPay" />
+
+							<p:menuitem id="Clientes_galaxPay_cadastrados"
+								value="Clientes Cadastrados" icon="pi-dollar"
+								outcome="/ConsultaClientesGalaxPay" />
+						</p:submenu>
+						<p:submenu id="m_Relatorios" label="Relatorios" icon="pi print">
+							<p:menuitem id="extratoCelsoin" value="Extrato Celcoin"
+								icon="pi-dollar" outcome="/ExtratoCelcoin" />
+						</p:submenu>
+
+					</p:submenu>
+
+					<p:submenu id="m_Menu_Certificados" label="Certificado">
+						<p:submenu id="m_Certificados" label="Certificados" icon="pi print">
+							<p:menuitem id="certificados" value="Cadastrar Certificados"
+								icon="pi-dollar" outcome="/Certificados" />
+						</p:submenu>
+					</p:submenu>
+
+				</pr:menu>
+			</h:form>
+		</div>
+	</div>
+
+</ui:composition>

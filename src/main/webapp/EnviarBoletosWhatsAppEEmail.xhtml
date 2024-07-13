@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Enviar WhatsApp</ui:define>
+
+	<ui:define name="viewname">
+		<li>FINANCEIRO</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/formlayout">ENVIO WHATSAPP</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<style>
+.cheap {
+	background-color: #F0FFFF !important;
+	background-image: none !important;
+	color: #808080 !important;
+}
+
+.ground {
+	background-color: #F0FFFF !important;
+	background-image: none !important;
+	color: #FF0000 !important;
+}
+</style>
+
+		<div class="grid ui-fluid">
+			<h:form id="form">
+				<div class="col-12 md:col-12">
+					<div class="card">
+
+						<p:panel header="Informe o intervalo de datas">
+							<p:outputLabel id="lblInicial" value="Data Inicial: " />
+							<p:inputMask value="#{MBDuplicatas.dtInicial}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<p:outputLabel id="lblFinal" value=" Data Final: " />
+							<p:inputMask value="#{MBDuplicatas.dtFinal}" mask="99/99/9999"
+								maxlength="10" size="10" />
+
+							<p:commandButton value="Listar"
+								actionListener="#{MBDuplicatas.listarDuprecBoletosAEnviarWA(MBUsuarios.empresaSelecionada.usu,MBDuplicatas.dtInicial, MBDuplicatas.dtFinal)}"
+								update="tblBoletos">
+							</p:commandButton>
+						</p:panel>
+
+
+					</div>
+					
+						
+				</div>
+			</h:form>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">File</ui:define>
+
+	<ui:define name="viewname">
+		<li>UI KIT</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/file">FILE</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<div class="fluid">
+			<div class="col-12">
+				<div class="card">
+
+					<h5>Certificado</h5>
+					<h:form id="frmCertificado">
+
+						<p:fileUpload value="#{MBCertificados.file}" mode="simple"
+							skinSimple="true" process="@this" update="messages"
+							actionListener="#{MBCertificados.handleFileUpload}" />
+						<div></div>
+						<p:password value="#{MBCertificados.senha}" toggleMask="true"
+							redisplay="true">Informe a Senha do Certificado: </p:password>
+
+						<p:commandButton value="Validar"
+							styleClass="ui-button-flat mr-3 mb-2"
+							update=":frmCertificado:pnlDados">
+							<f:setPropertyActionListener target="#{MBCertificados.file}"
+								value="#{event.file}" />
+						</p:commandButton>
+
+						<p:panel id="pnlDados">
+							<p:panelGrid columns="4" style="width: 100%;"
+								header="Dados do Certificado"
+								rendered="#{MBCertificados.rendered}">
+								<p:row style="width: 20%;">
+									<p:outputLabel value="Cnpj:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj}" />
+								</p:row>
+								<p:row style="width: 20%;">
+									<p:outputLabel value="Razão Social:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj}" />
+								</p:row>
+								<p:row>
+									<p:outputLabel value="Validade:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj} - " />
+								</p:row>
+								<p:row>
+									<p:outputLabel value="Cnpj:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj}" />
+								</p:row>
+								<p:row>
+									<p:outputLabel value="Cnpj:" />
+									<h:outputText value="#{MBCertificados.certificado.cnpj}" />
+								</p:row>
+								<p:commandButton type="button" title="Salvar" icon="pi pi-save"
+									styleClass="ui-button-help mr-3"
+									actionListener="#{MBCertificados.salvarCertificado(MBCertificados.certificado)}"
+									update="frmCertificado" />
+
+							</p:panelGrid>
+						</p:panel>
+					</h:form>
+
+					<p:messages id="messages" autoUpdate="true" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

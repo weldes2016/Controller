@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mapa dos Estados Brasileiros</title>
+  <style>
+    /* Estilos CSS para o mapa */
+    path {
+      stroke: #fff;
+      stroke-width: 1;
+      fill: #cce5ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mapa dos Estados Brasileiros</h1>
+  <svg width="800" height="600"></svg>
+
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script>
+    // Largura e altura do mapa
+    var width = 800;
+    var height = 600;
+
+    // Configuração da projeção do mapa (usando projeção Mercator)
+    var projection = d3.geoMercator()
+                       .scale(750)
+                       .center([-52, -15]) // Centraliza o mapa no Brasil
+                       .translate([width / 2, height / 2]);
+
+    // Criação do path usando a projeção
+    var path = d3.geoPath().projection(projection);
+
+    // Elemento SVG para desenhar o mapa
+    var svg = d3.select("svg");
+
+    // Carregamento do arquivo GeoJSON dos estados brasileiros
+    d3.json("estados_brasileiros.geojson").then(function(geojson) {
+      // Desenha os estados
+      svg.selectAll("path")
+         .data(geojson.features)
+         .enter()
+         .append("path")
+         .attr("d", path)
+         .attr("stroke", "#333")
+         .attr("fill", "#cce5ff"); // Cor de preenchimento do mapa
+
+      // Adicione aqui mais elementos ou interatividade conforme necessário
+    });
+  </script>
+</body>
+</html>

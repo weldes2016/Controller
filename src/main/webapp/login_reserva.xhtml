@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</f:facet>
+	<title>Amplus EGP - Login</title>
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+
+</h:head>
+
+<h:body styleClass="login-body">
+
+	<div class="login-image">
+		<p:graphicImage name="images/pages/bg-header-login.png"
+			library="rain-layout" />
+	</div>
+	<div class="login-card">
+		<h1>
+			Controller <span> WEB</span>
+		</h1>
+
+		<h:form id="frmLogin">
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+			
+			<p:panel rendered="#{MB.renderizarUsuarios}">
+				<span>Bem vindo(a) #{MB.usuarioLogado.nome}, por favor,
+					selecione o usuario <br />e Amplie as suas possibilidades!
+				</span>
+
+				<p:outputLabel value="Informe o Usuário" />
+				<h:inputText value="#{MBLogin.usuario.nome}" />
+
+				<p:outputLabel value="   Informe a Senha: " />
+				<p:inputText id="senha" value="#{MBLogin.usuario.senha}"
+					feedback="true" type="password">
+					<span class="password-icon" onclick="mostrarOcultarSenha('senha')">
+						<i class="pi pi-eye-slash"></i>
+					</span>
+				</p:inputText>
+
+
+				<div class="form-group">
+					<p:commandButton label="Validar Usuário" icon="pi pi-spin"
+						value="Validar Usuário" rendered="#{MBLogin.renderizarUsuarios}"
+						action="#{MBLogin.validarUsuario(MBLogin.usuario)}" />
+				</div>
+			</p:panel>
+			<p:panel rendered="#{MBLogin.renderizarEmpresas}">
+				<p:outputLabel for="empresas"
+					value="Olá #{MBLogin.usuarioLogado.nome}, agora escolha uma empresa: " />
+				<h:selectOneMenu id="empresas" value="#{MBLogin.empresaSelecionada}"
+					converter="empresasConverter">
+					<f:selectItems value="#{MBLogin.empresas}" var="empresa"
+						itemLabel="#{empresa.nome}" itemValue="#{empresa}" />
+				</h:selectOneMenu>
+				<div class="form-group">
+
+					<p:commandButton label="Entrar" icon="pi pi-spin" value="Entrar"
+						action="#{MBLogin.entrar(MBLogin.usuarioLogado, MBLogin.empresaSelecionada)}" />
+				</div>
+			</p:panel>
+		</h:form>
+	</div>
+
+	<h:outputStylesheet name="css/#{guestPreferences.layout}.css"
+		library="rain-layout" />
+
+
+</h:body>
+
+
+</html>

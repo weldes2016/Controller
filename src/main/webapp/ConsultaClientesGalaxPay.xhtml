@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<h:outputStylesheet name="css/flags/flags.css" library="demo" />
+	</ui:define>
+
+	<ui:define name="title">Consulta Clientes GalaxPay</ui:define>
+
+	<ui:define name="viewname">
+		<li>FINANCEIRO</li>
+		<li><i class="pi pi-chevron-right"></i></li>
+		<li><p:link outcome="/table">CONSULTA CLIENTES</p:link></li>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="formDataTable">
+
+			<div class="grid table-demo">
+				<div class="col-12">
+					<div class="card">
+
+						<p:growl id="msgs" showDetail="true"
+							skipDetailIfEqualsSummary="true" />
+
+						<p>Olá #{MBUsuarios.usuarioLogado.nome}, abaixo a lista dos
+							clientes da empresa #{MBUsuarios.empresaSelecionada.nom} que ainda
+							não foram enviados para cobrança.</p>
+						<p:dataTable widgetVar="clientesDT" var="clientes"
+							resizableColumns="true" paginator="true" rows="10" lazy="true"
+							value="#{MBDuplicatas.listarClientesGalaxPayCadastrados(MBUsuarios.empresaSelecionada.usu)}">
+
+							<f:facet name="header">
+								<div class="customers-table-header">
+									<span style="font-weight: bold">Clientes</span> <span
+										class="ui-input-icon-left filter-container"> <i
+										class="pi pi-search" /> <p:inputText id="globalFilter"
+											onkeyup="PF('clientesDT').filter()"
+											placeholder="Pesquisa Geral" />
+									</span>
+								</div>
+							</f:facet>
+
+							<p:column headerText="Nome" filterBy="#{clientes.name}"
+								style="width:8%" sortBy="#{clientes.name}">
+								<h:outputText value="#{clientes.name}" />
+							</p:column>
+
+							<p:column headerText="Documento" filterBy="#{clientes.document}"
+								style="width:8%" sortBy="#{clientes.document}">
+								<h:outputText value="#{clientes.document}" />
+							</p:column>
+
+							<p:column headerText="Status" filterBy="#{clientes.status}"
+								style="width:8%" sortBy="#{clientes.status}">
+								<h:outputText value="#{clientes.status}" />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+
+				</div>
+
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

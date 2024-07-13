@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+
+	<name>primefaces_rain</name>
+
+	<component>
+		<component-type>org.primefaces.component.RainMenu</component-type>
+		<component-class>org.primefaces.rain.component.RainMenu
+		</component-class>
+	</component>
+
+	<render-kit>
+		<renderer>
+			<component-family>org.primefaces.component</component-family>
+			<renderer-type>org.primefaces.component.RainMenuRenderer
+			</renderer-type>
+			<renderer-class>org.primefaces.rain.component.RainMenuRenderer
+			</renderer-class>
+		</renderer>
+	</render-kit>
+
+	<converter>
+		<converter-for-class>br.com.controller.domain.Empresas
+		</converter-for-class>
+		<converter-class>br.com.controller.converter.EmpresasConverter
+		</converter-class>
+	</converter>
+
+
+</faces-config>
